@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+android:id="@+id/userbookitemviewactivity"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:orientation="vertical"
+tools:context=".ui.userview.userbookitemview.UserBookItemView">
+
+
+
+
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/userbookitemrecycler"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    >
+
+</androidx.recyclerview.widget.RecyclerView>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_weight="9"
+    >
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Home"
+        android:id="@+id/userbookitemUpdate"
+        />
+
+
+
+</LinearLayout>
+
+</LinearLayout>

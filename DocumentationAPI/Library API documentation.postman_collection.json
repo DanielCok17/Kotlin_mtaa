@@ -1,0 +1,557 @@
+{
+	"info": {
+		"_postman_id": "33064a0e-e8f2-44d2-8292-1f9c016ed807",
+		"name": "Library API documentation",
+		"description": "## Introduction\nSimple Library app for renting books.\n\n## Schema\nAll API requests should be transported using HTTP. API supports `JSON: Accept: application/json` encoding.\n\n## HTTP methods\n\n- `GET` Accessing resource\n- `POST` Creating new resource\n- `PUT` Editing of resource\n- `DELETE` Deleting resource\n\n## Error Codes\n- `200` `201` `204`\tSuccess response\n- `401` Invalid user authentication (invalid credentials)\n- `403`\tInsufficient permissions for action\n- `404`\tResource not found\n- `422` Validation error with program-readable metadata\n- `5xx` Internal server error\n- \n\n## Error message\n\nIf status code is not `2xx` or `422`, API returns error response with description.\n```JSON \n\n{ \n  \"error\": {\n    \"message\": \"Invalid permissions!\",\n  }\n}\n\n\n```\n## Validation error\nIf status code of response is `422`, API returns validation error with detailed description. API always tries to return as much validation errors as possible in one call to increase probability of success of next request.\n```JSON\n\n{\n  \"errors\": {\n    \"isbn\": [ \"Must be unique.\" ],\n    \"name\": [ \"Must countain name\" ]\n  }\n}\n\n\n```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Edit book item state",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "library/book_item/state/%id",
+					"host": [
+						"library"
+					],
+					"path": [
+						"book_item",
+						"state",
+						"%id"
+					]
+				},
+				"description": "Edit book item state in library system\n\n>Successful edit of the book state request will return *HTTP 202* Status code"
+			},
+			"response": [
+				{
+					"name": "Edit book state",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"2\",\n    \"state\": \"4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "libray/v1/book/item/%id?id=2",
+							"host": [
+								"libray"
+							],
+							"path": [
+								"v1",
+								"book",
+								"item",
+								"%id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2",
+									"description": "Id of the book"
+								}
+							]
+						}
+					},
+					"status": "Accepted",
+					"code": 202,
+					"_postman_previewlanguage": "Text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"response\": {\n\t\t\"message\": \"Book state was updated\"\n\t}\n}"
+				}
+			]
+		},
+		{
+			"name": "Add book item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "library/book_item/add",
+					"host": [
+						"library"
+					],
+					"path": [
+						"book_item",
+						"add"
+					]
+				},
+				"description": "Add new book into the library system.\n\n>Successful add new book request will return *HTTP 201* Status code\n\n>Unsuccessful add new book request will return *HTTP 422* Status code"
+			},
+			"response": [
+				{
+					"name": "Successful add new book",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isbn\": \"978-0-13-601970-3\",\n    \"name\": \"Book_name3\",\n    \"descripion\": \"Nice and shiny book description3\",\n    \"photo\": \"way to the photo3\",\n    \"publiser_id\": \"3\",\n    \"author_id\": \"3\",\n    \"published_at\": \"2003-03-03 30:30:30\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "library/v1/book_item/add",
+							"host": [
+								"library"
+							],
+							"path": [
+								"v1",
+								"book_item",
+								"add"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"response\": {\n\t\t\"message\": \"Book successfully uploaded\"\n\t}\n}"
+				},
+				{
+					"name": "Unsuccessful add book",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isbn\": \"978-0-13-601970-3\",\n    \"name\": \"Book_name3\",\n    \"descripion\": \"Nice and shiny book description3\",\n    \"publiser_id\": \"3\",\n    \"author_id\": \"3\",\n    \"published_at\": \"2003-03-03 30:30:30\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "library/book/item/%id?",
+							"host": [
+								"library"
+							],
+							"path": [
+								"book",
+								"item",
+								"%id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+					"code": 422,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": {\n        \"photo\": [\n            \"Must contain photo of the book.\"\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete book item from library",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "library/book_item/delete/%id",
+					"host": [
+						"library"
+					],
+					"path": [
+						"book_item",
+						"delete",
+						"%id"
+					]
+				},
+				"description": "Delete book_item from library system.\n\n>Successful delete of the book request will return *HTTP 200* Status code\n\n>Request for a non existing book will return *HTTP 404* Status code"
+			},
+			"response": [
+				{
+					"name": "Successful delete book_item",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"1\"\n}"
+						},
+						"url": {
+							"raw": "library/v1/book/item/%id?id=1",
+							"host": [
+								"library"
+							],
+							"path": [
+								"v1",
+								"book",
+								"item",
+								"%id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Delete by ID"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n \t\"response\": {\n    \t\"message\": \"Book deleted successfully \"\n\t}\n}"
+				}
+			]
+		},
+		{
+			"name": "Get book item",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "library/book/get/%id",
+					"host": [
+						"library"
+					],
+					"path": [
+						"book",
+						"get",
+						"%id"
+					]
+				},
+				"description": "Get the book_item from library system.\n\n>Successful get book profile request will return *HTTP 200* Status code\n\n>Request for a non existing book prifile will return *HTTP 404* Status code"
+			},
+			"response": [
+				{
+					"name": "Successful get the profile of the book ",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "library/book/get/%id?id=1' ",
+							"host": [
+								"library"
+							],
+							"path": [
+								"book",
+								"get",
+								"%id"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1' "
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Conte",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": " {\n \t\"response\":{\n \t\t\"id\": \"1\",\n        \"name\": \"Book_name1\",\n        \"photo\": \"url of the photo1\",\n        \"created_at\": \"2020-03-27 20:03:10\",\n        \"updated_at\": \"2020-03-27 20:03:10\",\n        \"is_deleted\": \"false\"\n \t}\n }"
+				},
+				{
+					"name": "Unsuccessful request for book profile",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"99\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "library/book/%id/profile?isbn=99",
+							"host": [
+								"library"
+							],
+							"path": [
+								"book",
+								"%id",
+								"profile"
+							],
+							"query": [
+								{
+									"key": "isbn",
+									"value": "99"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"errors\": \"Could not find the book\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get all book items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "library/book/all",
+					"host": [
+						"library"
+					],
+					"path": [
+						"book",
+						"all"
+					]
+				},
+				"description": "Get the book_items from library system.\n\n>Successful get books request will return *HTTP 200* Status code\n\n>Error will return *HTTP 404* Status code"
+			},
+			"response": [
+				{
+					"name": "Get all book_items",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "library/book",
+							"host": [
+								"library"
+							],
+							"path": [
+								"book"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n\t\"items\":[\n\t    {\n\t        \"id\": \"1\",\n\t        \"name\": \"Book_name1\",\n\t        \"author_name\" : \"Book Author1\"\n\t        \"photo\": \"url of the photo1\",\n\t        \"descrition\": \"Nice and shiny descripton1\"\n\t        \"published_at\": \"2000-02-27 00:00:00\",\n\t        \"created_at\": \"2020-03-27 20:03:10\",\n\t        \"updated_at\": \"2020-03-27 20:03:10\",\n\t        \"is_deleted\": \"false\"\n\t    },\n\t    {\n\t        \"id\": \"2\",\n\t        \"name\": \"Book_name2\",\n\t        \"author_name\" : \"Book Author2\"\n\t        \"photo\": \"url of the photo2\",\n\t        \"descrition\": \"Nice and shiny descripton2\"\n\t        \"published_at\": \"2000-02-27 00:00:00\",\n\t        \"created_at\": \"2020-03-27 20:03:10\",\n\t        \"updated_at\": \"2020-03-27 20:03:10\",\n\t        \"is_deleted\": \"false\"\t    },\n\t    {\n\t        \"id\": \"3\",\n\t        \"name\": \"Book_name3\",\n\t        \"author_name\" : \"Book Author3\"\n\t        \"photo\": \"url of the photo3\",\n\t        \"descrition\": \"Nice and shiny descripton3\"\n\t        \"published_at\": \"2000-02-27 00:00:00\",\n\t        \"created_at\": \"2020-03-27 20:03:10\",\n\t        \"updated_at\": \"2020-03-27 20:03:10\",\n\t        \"is_deleted\": \"false\"\t    }\n\t],\n\t\"metadata\": {\n    \"page\": 1,\n    \"limit\": 2,\n    \"pages\": 14,\n    \"total\": 28\n  }\n}"
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "Login",
+					"host": [
+						"Login"
+					]
+				},
+				"description": "Login into the library system.\n\n>Successful login request will return *HTTP 202* Status code\n\n>Unsuccessful login request will return *HTTP 404* Status code"
+			},
+			"response": [
+				{
+					"name": "Login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"test.test@gmail.com\",\n    \"password\": \"TestTest\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "Login",
+							"host": [
+								"Login"
+							]
+						}
+					},
+					"status": "Accepted",
+					"code": 202,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"response\": {\n        \"id\": \"1\",\n        \"last_activity\": \"2020-28-03 10:30:30\",\n        \"updated_at\": \"2020-28-03 10:30:30\"\n    }\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "286c8f63-7095-44d1-8292-a16a73352d17",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d4ffa2d6-dcc5-4ee6-a8b1-4d1c5c09a60e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
